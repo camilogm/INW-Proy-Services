@@ -1,0 +1,78 @@
+package com.inw.proy.utils;
+
+import java.util.Collection;
+
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Repository;
+
+
+@Repository
+public class UserDetailsLogged implements UserDetails, CredentialsContainer {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String userName;
+
+	public UserDetailsLogged() {
+		
+	}
+	
+	
+	@Override
+	public void eraseCredentials() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return this.userName;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	public void setUserName(String userName) { 
+		this.userName = userName;
+	}
+
+	
+}
