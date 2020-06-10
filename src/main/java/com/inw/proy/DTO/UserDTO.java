@@ -8,24 +8,31 @@ public class UserDTO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final String jwt;
-	private final String userRol;
-	private final String name;
-	private final String lastName;
+	private String email;
+	private String password;
+	private String name;
+	private String lastName;
+	private String rol;
 	
-	public UserDTO(String jwt, String userRol,String name, String lastName) {
-		this.jwt = jwt;
-		this.userRol = userRol;
-		this.name=name;
-		this.lastName=lastName;
+	public UserDTO( String email, String password, String name, String lastName, String rol) {
+		this.email = email;
+		this.password = password;
+		this.name = name;
+		this.lastName = lastName;
+		this.rol = rol;
 	}
 
-	public String getJwt() {
-		return jwt;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
-	public String getUserRol() {
-		return userRol;
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 	public String getName() {
@@ -35,6 +42,34 @@ public class UserDTO implements Serializable {
 	public String getLastName() {
 		return lastName;
 	}
+
+	public String getRol() {
+		return rol;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public void setRol(String rol) {
+		this.rol = rol;
+	}
 	
 	
+	
+	
+	
+
 }

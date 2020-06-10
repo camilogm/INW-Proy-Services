@@ -36,7 +36,8 @@ public class UserDetailsLogged implements UserDetails, CredentialsContainer {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
 		ArrayList<SimpleGrantedAuthority> list=new ArrayList<>();
-		list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		String userRol = "ROLE_"+this.user.getRol();
+		list.add(new SimpleGrantedAuthority(userRol));
 		return list;
 	}
 
