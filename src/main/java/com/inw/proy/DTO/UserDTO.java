@@ -2,7 +2,7 @@ package com.inw.proy.DTO;
 
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class UserDTO implements Serializable {
 
 	/**
 	 * 
@@ -13,7 +13,7 @@ public class User implements Serializable {
 	private final String name;
 	private final String lastName;
 	
-	public User(String jwt, String userRol,String name, String lastName) {
+	public UserDTO(String jwt, String userRol,String name, String lastName) {
 		this.jwt = jwt;
 		this.userRol = userRol;
 		this.name=name;

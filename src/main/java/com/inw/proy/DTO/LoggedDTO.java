@@ -9,9 +9,9 @@ public class LoggedDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final Boolean authenticated;
-	private final User user;
+	private final UserDTO user;
 	
-	public LoggedDTO(Boolean authenticated, User user) {
+	public LoggedDTO(Boolean authenticated, UserDTO user) {
 		this.authenticated = authenticated;
 		this.user = user;
 	}
@@ -20,7 +20,7 @@ public class LoggedDTO implements Serializable {
 		return authenticated;
 	}
 
-	public User getUser() {
+	public UserDTO getUser() {
 		return user;
 	}
 }
