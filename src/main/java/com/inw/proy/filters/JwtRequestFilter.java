@@ -36,6 +36,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	
 	@Autowired
 	private UserDetailsLogged userDetails;
+	
+	@Autowired
+	private CheckPublicEndPoints checkPublic;
 
 	private GetObject getObject = new GetObjectFromGson();
 	
@@ -43,7 +46,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		System.out.println(request.getRequestURI()+ " jwt ");
+		if (checkPublic.execute(request.getRequestURI())){ 
+			filterChain.doFilter(request, response);
+			return;
+		}
+	
 		
 		
 		HttpClient http = HttpClientBuilder.create().build();

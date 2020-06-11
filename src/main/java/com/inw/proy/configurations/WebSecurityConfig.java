@@ -1,4 +1,4 @@
-package com.inw.proy.security;
+package com.inw.proy.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ import com.inw.proy.utils.MyUserDetailsService;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( prePostEnabled = true)
-public class ConfigSpringSecurity  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
 	private MyUserDetailsService userDetailsService;

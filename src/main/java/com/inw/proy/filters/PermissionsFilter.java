@@ -31,10 +31,21 @@ public class PermissionsFilter extends OncePerRequestFilter {
 	@Autowired
 	private Error error;
 	
+	@Autowired
+	private CheckPublicEndPoints checkPublic;
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
+		
+		if (checkPublic.execute(request.getRequestURI())){ 
+			filterChain.doFilter(request, response);
+			return;
+		}
+	
+		
+		
 		String jsonResponse = "";
 		try {
 
