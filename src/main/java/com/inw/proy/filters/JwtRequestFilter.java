@@ -19,10 +19,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.inw.proy.DTO.LoggedDTO;
+import com.inw.proy.DTO.ResponseDTO;
 import com.inw.proy.externalapis.GetURL;
 import com.inw.proy.serializations.GetObject;
 import com.inw.proy.serializations.GetObjectFromGson;
-
+import com.inw.proy.serializations.GetStringfy;
+import com.inw.proy.serializations.GetStringfyFromGson;
+import com.inw.proy.utils.Error;
 import com.inw.proy.utils.UserDetailsLogged;
 
 
@@ -40,21 +43,25 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private CheckPublicEndPoints checkPublic;
 
+	@Autowired
+	private Error error;
+	
 	private GetObject getObject = new GetObjectFromGson();
+	private GetStringfy getStringfy = new GetStringfyFromGson();
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+	
+		String jwtToken = request.getHeader("authorization");
 		
-		if (checkPublic.execute(request.getRequestURI())){ 
+		if (checkPublic.execute(request.getRequestURI()
+				) && jwtToken==null){ 
 			filterChain.doFilter(request, response);
 			return;
 		}
 	
-		
-		
-		HttpClient http = HttpClientBuilder.create().build();
-		String jwtToken = request.getHeader("authorization");
+		HttpClient http = HttpClientBuilder.create().build();		
 		String jsonResponse="";
 		
 		try {
@@ -75,15 +82,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 				userDetails.setUser(logged.getUser());	
 				filterChain.doFilter(request, response);
 				return;
+			}else { 
+				error.setError((Error) this.getObject.execute(jsonResponse, Error.class)); 
 			}
 				
 		}catch (Exception ex) {
-			jsonResponse ="\"{'status':400,'message':'Unauthorized'}\"";
-			System.out.println("here");
-			System.out.println(ex);
+			error.setError( "Not permissions", null);
 		}
+	
+		ResponseDTO resp = new ResponseDTO(HttpStatus.UNAUTHORIZED.value(), "", null, error);
 		
-		response = ResetResponse.execute(jsonResponse, response);
+		response = ResetResponse.execute(getStringfy.execute(resp, ResponseDTO.class), response,HttpStatus.UNAUTHORIZED.value());
 		return;
 			
 		

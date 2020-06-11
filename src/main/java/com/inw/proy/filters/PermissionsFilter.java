@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -62,7 +61,7 @@ public class PermissionsFilter extends OncePerRequestFilter {
 		    
 		}
 	    catch (NestedServletException ex) {
-			error.setError(HttpStatus.UNAUTHORIZED.value(), "Not permissions", null);
+			error.setError( "Not permissions", null);
 			GetStringfy getStringfy = new GetStringfyFromGson();
 			jsonResponse = getStringfy.execute(error, Error.class);
 			
