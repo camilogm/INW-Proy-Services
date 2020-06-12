@@ -24,7 +24,7 @@ import com.inw.proy.utils.ResetResponse;
 import com.inw.proy.utils.UserDetailsLogged;
 
 @Component
-@Order(2)
+@Order(3)
 public class PermissionsFilter extends OncePerRequestFilter {
 
 	
@@ -41,14 +41,16 @@ public class PermissionsFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 
-		System.out.println("permissionfilter");
 		
-		
+		System.out.println("permisifilter");
 		response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN");
         
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+        }
 		
 		if (checkPublic.execute(request.getRequestURI())){ 
 			filterChain.doFilter(request, response);
