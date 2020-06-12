@@ -14,6 +14,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -32,6 +33,7 @@ import com.inw.proy.utils.UserDetailsLogged;
 
 
 @Component
+@Order(1)
 public class JwtRequestFilter extends OncePerRequestFilter {
 
 	
@@ -55,6 +57,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 	
+		System.out.println("jwt");
 		String jwtToken = request.getHeader("authorization");
 		
 		if (checkPublic.execute(request.getRequestURI()

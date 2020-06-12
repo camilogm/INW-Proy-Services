@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inw.proy.DTO.Response;
+import com.inw.proy.DTO.UserDTO;
 import com.inw.proy.utils.UserDetailsLogged;
 
 @RestController
@@ -40,6 +41,16 @@ public class MyProfileFinder {
 		return new ResponseEntity<>(
 				Response.ok(userDetails.getUser()), HttpStatus.OK
 				);
+				
+	}
+	
+	@RequestMapping(value = "/prueba", method = RequestMethod.GET,
+			headers = "Accept= application/json")
+	public ResponseEntity<?> execfsda(){ 
+		
+		System.out.println("te respondo ma niggo");
+		return ResponseEntity.status(HttpStatus.OK)
+		        .body(new UserDTO(0, "fdasf", "!reware", "reawer", "reawer", "reawer"));
 				
 	}
 	
