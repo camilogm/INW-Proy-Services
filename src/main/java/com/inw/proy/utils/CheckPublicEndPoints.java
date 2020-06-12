@@ -1,4 +1,4 @@
-package com.inw.proy.filters;
+package com.inw.proy.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

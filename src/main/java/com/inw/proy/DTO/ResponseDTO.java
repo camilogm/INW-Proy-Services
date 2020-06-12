@@ -30,6 +30,13 @@ public class ResponseDTO implements Serializable {
 		
 	}
 	
+	public ResponseDTO(Object error,int status) { 
+		this.status = status;
+		this.jwt = "";
+		this.data = null;
+		this.error = error;
+	}
+	
 	public int getStatus() {
 		return status;
 	}

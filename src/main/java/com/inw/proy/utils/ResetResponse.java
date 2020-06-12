@@ -1,4 +1,4 @@
-package com.inw.proy.filters;
+package com.inw.proy.utils;
 
 import java.io.IOException;
 

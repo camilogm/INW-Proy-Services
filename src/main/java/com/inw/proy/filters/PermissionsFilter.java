@@ -17,7 +17,9 @@ import org.springframework.web.util.NestedServletException;
 
 import com.inw.proy.serializations.GetStringfy;
 import com.inw.proy.serializations.GetStringfyFromGson;
+import com.inw.proy.utils.CheckPublicEndPoints;
 import com.inw.proy.utils.Error;
+import com.inw.proy.utils.ResetResponse;
 import com.inw.proy.utils.UserDetailsLogged;
 
 @Component
@@ -48,7 +50,6 @@ public class PermissionsFilter extends OncePerRequestFilter {
 		String jsonResponse = "";
 		try {
 
-			System.out.println(request.getRequestURI());
 			
 			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 					new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());

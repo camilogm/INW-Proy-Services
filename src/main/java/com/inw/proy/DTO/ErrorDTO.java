@@ -1,17 +1,16 @@
 package com.inw.proy.DTO;
 
-import java.awt.List;
+import java.util.List;
 
 public class ErrorDTO{
 
 	private Integer status;
 	private String message;
-	private List errors;
+	private List<FieldErrorDTO> errors;
 	
-	public ErrorDTO(Integer status, String message,List errors) {
+	public ErrorDTO(Integer status, String message) {
 		this.status = status;
 		this.message = message;
-		this.errors = errors;
 	}
 
 	public Integer getStatus() {
@@ -27,11 +26,11 @@ public class ErrorDTO{
 		this.message = message;
 	}
 
-	public List getErrors() {
+	public List<FieldErrorDTO> getErrors() {
 		return errors;
 	}
 
-	public void setErrors(List errors) {
+	public void setErrors(List<FieldErrorDTO> errors) {
 		this.errors = errors;
 	}
 	

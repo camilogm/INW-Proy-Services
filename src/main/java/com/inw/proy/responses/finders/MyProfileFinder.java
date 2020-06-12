@@ -33,4 +33,14 @@ public class MyProfileFinder {
 				
 	}
 	
+	@RequestMapping(value = "/myf", method = RequestMethod.GET , headers="Accept=application/json")
+	@PreAuthorize(value = "hasRole('ROLE_USER')")
+	public ResponseEntity<?> exec(){ 
+		
+		return new ResponseEntity<>(
+				Response.ok(userDetails.getUser()), HttpStatus.OK
+				);
+				
+	}
+	
 }
