@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.NestedServletException;
 
+import com.inw.proy.DTO.ResponseDTO;
 import com.inw.proy.serializations.GetStringfy;
 import com.inw.proy.serializations.GetStringfyFromGson;
 import com.inw.proy.utils.CheckPublicEndPoints;
@@ -37,31 +39,18 @@ public class PermissionsFilter extends OncePerRequestFilter {
 	@Autowired
 	private CheckPublicEndPoints checkPublic;
 	
+	private GetStringfy getStringfy = new GetStringfyFromGson();
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-
-		
-		System.out.println("permisifilter");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN");
-        
-        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
-        }
 		
 		if (checkPublic.execute(request.getRequestURI())){ 
 			filterChain.doFilter(request, response);
 			return;
 		}
 	
-		
-		
-		String jsonResponse = "";
 		try {
-
 			
 			UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
 					new UsernamePasswordAuthenticationToken(userDetails,"",userDetails.getAuthorities());
@@ -74,13 +63,12 @@ public class PermissionsFilter extends OncePerRequestFilter {
 		    
 		}
 	    catch (NestedServletException ex) {
-			error.setError( "Not permissions", null);
-			GetStringfy getStringfy = new GetStringfyFromGson();
-			jsonResponse = getStringfy.execute(error, Error.class);
-			
+	    	error.setError( "Not permissions", null);
 		}
 		
-		response = ResetResponse.execute(jsonResponse, response);
+		ResponseDTO resp = new ResponseDTO(HttpStatus.UNAUTHORIZED.value(), "", null, error);
+		response = ResetResponse.execute(getStringfy.execute(resp, ResponseDTO.class), response,HttpStatus.UNAUTHORIZED.value());
+		
 		return;
 		
 	}
