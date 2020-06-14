@@ -65,6 +65,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			return;
 		}
 	
+		
 		HttpClient http = HttpClientBuilder.create().build();		
 		String jsonResponse="";
 		
@@ -74,7 +75,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			HttpPost postRequest = new HttpPost(loginAPI.read("checkaccess")); 
 			postRequest.addHeader("content-type","application/json");
 			postRequest.addHeader("Accept", "application/json");
-			postRequest.addHeader("Authorization",jwtToken);
+			postRequest.addHeader("Authorization",jwtToken);	
 			
 			HttpResponse apiResponse = http.execute(postRequest);
 			jsonResponse = EntityUtils.toString(apiResponse.getEntity());
