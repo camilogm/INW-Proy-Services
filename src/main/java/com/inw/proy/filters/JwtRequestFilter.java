@@ -19,8 +19,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.inw.proy.DTO.LoggedDTO;
-import com.inw.proy.DTO.ResponseDTO;
+import com.inw.proy.DTO.logged.LoggedDTO;
+import com.inw.proy.DTO.responses.ResponseDTO;
 import com.inw.proy.externalapis.GetURL;
 import com.inw.proy.serializations.GetObject;
 import com.inw.proy.serializations.GetObjectFromGson;
@@ -46,6 +46,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	
 	@Autowired
 	private CheckPublicEndPoints checkPublic;
+
 
 	@Autowired
 	private Error error;

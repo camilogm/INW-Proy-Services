@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.NestedServletException;
 
-import com.inw.proy.DTO.ResponseDTO;
+import com.inw.proy.DTO.responses.ResponseDTO;
 import com.inw.proy.serializations.GetStringfy;
 import com.inw.proy.serializations.GetStringfyFromGson;
 import com.inw.proy.utils.CheckPublicEndPoints;
@@ -63,7 +63,8 @@ public class PermissionsFilter extends OncePerRequestFilter {
 		    
 		}
 	    catch (NestedServletException ex) {
-	    	error.setError( "Not permissions", null);
+	    	System.out.println(ex);
+	    	error.setError( "No hay permisos para acceder aquí papito", null);
 		}
 		
 		ResponseDTO resp = new ResponseDTO(HttpStatus.UNAUTHORIZED.value(), "", null, error);

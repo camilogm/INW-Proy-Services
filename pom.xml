@@ -94,13 +94,6 @@
 		    <version>4.5.12</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.inw</groupId>
-			<artifactId>ORM</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/libs/ORM.jar</systemPath>
-		</dependency>		
 		
 	</dependencies>
 

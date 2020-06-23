@@ -9,7 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
-import com.inw.proy.DTO.UserDTO;
+import com.inw.proy.DTO.logged.UserDTO;
 
 
 @Repository
