@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 import sv.hawkframework.factorys.LoggerFactory;
 import sv.hawkframework.loggers.Logger;
 import sv.hawkframework.loggers.NoLogger;
@@ -51,16 +52,7 @@ public class MySqlConnection  implements DataBaseConnection,AutoCloseable{
 	private void openConnection() {
 
 		try {
-//			properties.load(new FileReader(path));
-//			String host = (String) properties.get("host");
-//			String user = (String) properties.get("user");
-//			String password = (String) properties.get("password");
-//			String database = (String) properties.get("database");
-//			String extraParameters = (String) properties.get("extra.parameters");
-//			
-//			String url = host+"/"+database+"?"+"user="+user+"&"+"password="+password+"&"+extraParameters;
-//			this.connectionMysql = DriverManager.getConnection(url);
-		
+
 			String url ="jdbc:mysql://blhukvcuiurjxgkfeise-mysql.services.clever-cloud.com/blhukvcuiurjxgkfeise?user=uhafqkblamf2lqpl&password=A4B2zjc1T52toESVq6lf";
 			this.connectionMysql = DriverManager.getConnection(url);
 					
@@ -73,13 +65,7 @@ public class MySqlConnection  implements DataBaseConnection,AutoCloseable{
 			logger.error(e.getMessage());
 			e.fillInStackTrace();
 			return;
-		}
-		/*
-		 * catch (IOException e) {
-		 * 
-		 * }
-		 */
-		
+		}		
 	}
 	
 
@@ -115,7 +101,17 @@ public class MySqlConnection  implements DataBaseConnection,AutoCloseable{
 		if (this.connectionMysql==null || this.connectionMysql.isClosed())
 			this.openConnection();
 		
-		return this.connectionMysql.prepareStatement(query).executeQuery();
+		ResultSet rs = null;
+		try {
+			rs = this.connectionMysql.prepareStatement(query).executeQuery();
+			
+		}catch (SQLException ex) {
+			this.connectionMysql.close();
+			this.openConnection();
+			rs = this.connectionMysql.prepareStatement(query).executeQuery();	
+		}
+		
+		return rs;
 	}
 
 

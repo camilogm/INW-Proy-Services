@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inw.proy.DTO.menu.MenuUpdateDTO;
 import com.inw.proy.DTO.responses.ResponseCustom;
-import com.inw.proy.services.deletes.DeleteService;
+import com.inw.proy.services.deletes.DeleteMenuDetailService;
 import com.inw.proy.services.inserts.MenuDetailInsertService;
 import com.inw.proy.services.updates.MenuDetailUpdateService;
 import com.inw.proy.services.updates.MenuUpdateService;
@@ -36,8 +36,8 @@ public class MenuUpdateController {
 	private MenuDetailUpdateService menuDetailUpdateService;
 
 	@Autowired
-	@Qualifier("menuDetailDeleteServiceHF")
-	private DeleteService menuDetailDeleteService;
+	@Qualifier("deleteMenuDetailHF")
+	private DeleteMenuDetailService menuDetailDeleteService;
 	
 	
 	@PatchMapping(value = "/menu/update", headers = "Accept=application/json")

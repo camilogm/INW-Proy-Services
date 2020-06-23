@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import com.inw.proy.DTO.menu.DeleteMenuDetailDTO;
 
-public interface DeleteService {
+public interface DeleteMenuDetailService {
 
 	Object deleteMany(DeleteMenuDetailDTO[] details) throws NullPointerException, SQLException;
 

@@ -42,7 +42,11 @@ public class MenuUpdateHF implements MenuUpdateService {
 		
 		
 		MenuDTO menuUpdate = menuUpdateDTO.getMenu();
+		int active = menuUpdateDTO.getActive()==1 || menuUpdate.getActive()==0 ? menuUpdate.getActive() : 
+					menuOriginal.getActive();
+		
 		menuUpdate.setCode(menuOriginal.getCode());
+		menuUpdate.setActive(active);
 		
 		menuORM.setObject(menuUpdate);
 		

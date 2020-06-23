@@ -1,4 +1,4 @@
-package com.inw.proy.DTO.menu;
+package com.inw.proy.DTO.promotion;
 
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +20,6 @@ public class PromotionDetailDTO {
 	@SerializedName("menu_detail_id")
 	private Integer menuDetailId;
 	@Expose
-	@NotNull
 	private Integer quantity;
 	
 	public PromotionDetailDTO() { 

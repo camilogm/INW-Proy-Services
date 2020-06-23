@@ -1,15 +1,15 @@
 package com.inw.proy.services.updates;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.inw.proy.DTO.menu.PromotionDTO;
-import com.inw.proy.DTO.menu.PromotionDetailDTO;
-import com.inw.proy.utils.PromotionStatus;
+import com.inw.proy.DTO.promotion.PromotionDTO;
+import com.inw.proy.DTO.promotion.PromotionUpdateDTO;
+import com.inw.proy.exceptions.NotAllowedException;
+import com.inw.proy.services.access.CheckWriteShopAccess;
 
 import sv.hawklibrary.com.ORM.ORMApplicationTables;
 
@@ -17,49 +17,41 @@ import sv.hawklibrary.com.ORM.ORMApplicationTables;
 @Qualifier("promotionUpdateHF")
 public class PromotionUpdateHF implements PromotionUpdateService {
 
-	ORMApplicationTables<PromotionDTO> promotionORM;
-	ORMApplicationTables<PromotionDetailDTO> promotionDetailORM;
+	@Autowired
+	@Qualifier("checkWriteShopHF")
+	private CheckWriteShopAccess checkWriteShopAccess;
+	
+	private ORMApplicationTables<PromotionUpdateDTO> promotionORM;
 	
 	public PromotionUpdateHF() {
-		promotionORM = new ORMApplicationTables<>(PromotionDTO.class);
-		promotionDetailORM = new ORMApplicationTables<>(PromotionDetailDTO.class);
+		
+		this.promotionORM = new ORMApplicationTables<PromotionUpdateDTO>(PromotionUpdateDTO.class);
+		
 	}
-
 	
 	@Override
-	public Boolean auditoPromotionStatus(Integer detailMenuId, Integer menuId) throws NullPointerException, SQLException {
-
-		Object[][] conditions = {{"menu_id","=",menuId,null}};
-		ArrayList<PromotionDTO> promotions = promotionORM.findMany(conditions);
+	public Object update(PromotionUpdateDTO promotion) throws NullPointerException, SQLException { 
 		
-		if (promotions != null)
-			promotions.forEach(promotion -> {
-
-				if (promotion.getStatus() == PromotionStatus.ACTIVE) {
-
-					Object[][] conditionsDetail = { { "promotion_id", "=", promotion.getId(), null } };
-					ArrayList<PromotionDetailDTO> details = promotionDetailORM.findMany(conditionsDetail);
-
-					if (details!=null)
-						for (PromotionDetailDTO detail : details) {
-							
-							
-							if (Objects.equals(detail.getMenuDetailId(), detailMenuId)) {
-	
-								promotion.setStatus(PromotionStatus.AUDIT);
-								promotionORM.setObject(promotion);
-								try {
-									promotionORM.updateAndSave();
-								} catch (SQLException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-								break;
-							}
-						}
-				}
-			});		
+		if (!checkWriteShopAccess.execute(
+				promotion.getMenuId(),promotion.getShopId()))
+			throw new NotAllowedException();
 		
-		return false;
+		PromotionDTO promotionOriginal = promotionORM.find(promotion.getId());
+		
+		// not avialable exception, could be in the future
+		if (promotionOriginal.getMenuId() != promotion.getMenuId()) {
+			throw new NotAllowedException();
+		}else {
+			
+			if (promotion.getTotalPrice()==null || promotion.getTotalPrice()==0) {
+				promotion.setTotalPrice(promotionOriginal.getTotalPrice());
+			}
+			promotionORM.setObject(promotion);
+			promotionORM.updateAndSave();
+			return promotion;
+		}	
 	}
+
+
+	
 }

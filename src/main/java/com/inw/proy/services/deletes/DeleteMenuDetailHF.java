@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 
 import com.inw.proy.DTO.menu.DeleteMenuDetailDTO;
 import com.inw.proy.DTO.menu.MenuDetailDTO;
-import com.inw.proy.DTO.menu.PromotionDetailDTO;
+import com.inw.proy.DTO.promotion.PromotionDetailDTO;
 import com.inw.proy.services.access.CheckMenuDetailAccess;
 import com.inw.proy.services.access.CheckWriteShopAccess;
-import com.inw.proy.services.updates.PromotionUpdateService;
+import com.inw.proy.services.updates.PromotionChangeStatusService;
 
 import sv.hawklibrary.com.ORM.ORMApplicationTables;
 
 @Service
-@Qualifier("menuDetailDeleteServiceHF")
-public class MenuDetailDeleteServiceHF implements DeleteService {
+@Qualifier("deleteMenuDetailHF")
+public class DeleteMenuDetailHF implements DeleteMenuDetailService {
 
 	private ORMApplicationTables<MenuDetailDTO> menuDetailORM;
 	private ORMApplicationTables<PromotionDetailDTO> promotionDetailORM;
@@ -27,15 +27,15 @@ public class MenuDetailDeleteServiceHF implements DeleteService {
 	private CheckWriteShopAccess checkWriteShopAccess;
 	
 	@Autowired
-	@Qualifier("promotionUpdateHF")
-	private PromotionUpdateService promotionUpdateService;
+	@Qualifier("promotionChangeStatusHF")
+	private PromotionChangeStatusService promotionUpdateService;
 	
 	@Autowired
 	@Qualifier("checkMenuDetailHF")
 	private CheckMenuDetailAccess checkMenuDetailAccess;
 	
 	
-	public MenuDetailDeleteServiceHF() {
+	public DeleteMenuDetailHF() {
 		menuDetailORM = new ORMApplicationTables<>(MenuDetailDTO.class);	
 		promotionDetailORM = new ORMApplicationTables<>(PromotionDetailDTO.class);
 	}

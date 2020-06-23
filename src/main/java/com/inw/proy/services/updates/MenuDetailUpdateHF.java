@@ -18,8 +18,8 @@ public class MenuDetailUpdateHF implements MenuDetailUpdateService {
 	ORMApplicationTables<MenuDetailDTO> menuDetailORM;
 	
 	@Autowired
-	@Qualifier("promotionUpdateHF")
-	private PromotionUpdateService promotionUpdateService;
+	@Qualifier("promotionChangeStatusHF")
+	private PromotionChangeStatusService promotionUpdateService;
 	
 	public MenuDetailUpdateHF() {
 		menuDetailORM = new ORMApplicationTables<>(MenuDetailDTO.class);

@@ -22,6 +22,7 @@ public class ResponseDTO implements Serializable {
 		this.data = data==null ? new Object() : data;
 		this.error = error==null ? new Object() : error;
 	}
+	
 	public ResponseDTO(Object data) {
 		this.status = HttpStatus.OK.value();
 		this.jwt = "";

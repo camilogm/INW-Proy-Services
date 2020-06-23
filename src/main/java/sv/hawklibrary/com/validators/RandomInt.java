@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class RandomInt {
 
-	public int nextTenDigitsRnaodm() {
+	public int nextTenDigitsRandom() {
 		
 		Random random = new Random();
 		int number =  random.nextInt(1000000000)+1;
