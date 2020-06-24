@@ -21,6 +21,8 @@ public class PromotionDetailDTO {
 	private Integer menuDetailId;
 	@Expose
 	private Integer quantity;
+	private String name;
+	
 	
 	public PromotionDetailDTO() { 
 		
@@ -65,8 +67,14 @@ public class PromotionDetailDTO {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
-	
-	
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 	
 }
