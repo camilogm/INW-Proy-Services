@@ -24,14 +24,17 @@ public class MakeBuyDTO extends BuyDTO {
 		super();
 	}
 	
-	public MakeBuyDTO(Integer id, Integer buyerId, Double totalPrice, String productsBuy
-			, String date, @NotNull String localization,
+	public MakeBuyDTO(Integer id, Integer buyerId, Double totalPrice, 
+			String productsBuy,
+			String promotionsBuy,
+			String date, @NotNull String localization,
 			@NotNull Integer deliveryService, Integer rate,
 			@NotNull Integer menuId,
 			@NotNull Integer methodPay,
 			@NotNull @NotEmpty @Valid BuyProductDTO[] products, 
 			@Valid BuyPromotionDTO[] promotions) {
-		super(id, buyerId, totalPrice,productsBuy , date, localization, deliveryService, rate);
+		super(id, buyerId, totalPrice,productsBuy
+				,promotionsBuy, date, localization, deliveryService, rate);
 		
 		this.menuId = menuId;
 		this.methodPay = methodPay;

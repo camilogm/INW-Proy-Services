@@ -126,8 +126,8 @@ public class  ORMApplicationTables<T> implements IOperations<Object>,IFindOperat
 
 
 	@Override
-	public void updateAndSave() throws SQLException{
-		update.update(object);
+	public Boolean updateAndSave() throws SQLException{
+		return update.update(object);
 		
 	}
 

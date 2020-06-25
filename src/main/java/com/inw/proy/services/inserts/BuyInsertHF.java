@@ -44,6 +44,7 @@ public class BuyInsertHF implements BuyInsertService {
 		buy.setBuyerId(userDetails.getUser().getId());
 		buy.setDate(null);
 		buy.setProductsBuy(null);
+		buy.setPromotionsBuy(null);
 		//check localization mode
 		BuyDTO buyInsert = buy;
 		

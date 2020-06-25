@@ -2,6 +2,7 @@ package com.inw.proy.DTO.buy;
 
 import java.util.ArrayList;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.google.gson.annotations.Expose;
@@ -21,10 +22,12 @@ public class BuyPromotionDTO {
 	@SerializedName("promotion_name")
 	private String promotionName;
 	@Expose
+	@NotNull
+	@Min(1)
 	private Integer quantity;
 	@Expose
 	@SerializedName("memento_price")
-	private Integer mementoPrice;
+	private Double mementoPrice;
 	@Expose
 	@SerializedName("details")
 	private ArrayList<PromotionDetailDTO> details;
@@ -34,7 +37,9 @@ public class BuyPromotionDTO {
 	}
 
 
-	public BuyPromotionDTO(@NotNull Integer promotionId, String promotionName, Integer quantity, Integer mementoPrice,
+	public BuyPromotionDTO(@NotNull Integer promotionId, String promotionName, 
+			@NotNull @Min(1) Integer quantity, 
+			Double mementoPrice,
 			ArrayList<PromotionDetailDTO> details) {
 		this.promotionId = promotionId;
 		this.promotionName = promotionName;
@@ -42,6 +47,8 @@ public class BuyPromotionDTO {
 		this.mementoPrice = mementoPrice;
 		this.details = details;
 	}
+
+
 
 
 	public Integer getPromotionId() {
@@ -74,12 +81,12 @@ public class BuyPromotionDTO {
 	}
 
 
-	public Integer getMementoPrice() {
+	public Double getMementoPrice() {
 		return mementoPrice;
 	}
 
 
-	public void setMementoPrice(Integer mementoPrice) {
+	public void setMementoPrice(Double mementoPrice) {
 		this.mementoPrice = mementoPrice;
 	}
 

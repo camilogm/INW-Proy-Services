@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.inw.proy.DTO.TwoObjectsDTO;
 import com.inw.proy.DTO.buy.BuyPromotionDTO;
 import com.inw.proy.DTO.errors.FieldErrorDTO;
+import com.inw.proy.DTO.menu.MenuDetailDTO;
 import com.inw.proy.DTO.promotion.PromotionDTO;
 import com.inw.proy.DTO.promotion.PromotionDetailDTO;
 
@@ -23,15 +24,17 @@ public class BuyPromotionInsertHF implements BuyPromotionInsertService {
 
 	private ORMApplicationTables<PromotionDTO> promotionORM;
 	private ORMApplicationTables<PromotionDetailDTO> promotionDetailORM;
+	private ORMApplicationTables<MenuDetailDTO> menuDetailORM;
 	
 	public BuyPromotionInsertHF() {
 		
 		this.promotionORM = new ORMApplicationTables<>(PromotionDTO.class);
 		this.promotionDetailORM = new ORMApplicationTables<>(PromotionDetailDTO.class);
-
+		this.menuDetailORM = new ORMApplicationTables<>(MenuDetailDTO.class);
 	}
 	
-	public TwoObjectsDTO insertMany(BuyPromotionDTO[] details,Integer menuId) { 
+	@Override
+	public TwoObjectsDTO insertMany(BuyPromotionDTO[] details,Integer menuId) throws NullPointerException, SQLException { 
 		
 		TwoObjectsDTO response = new TwoObjectsDTO();
 		ArrayList<FieldErrorDTO> errors = new ArrayList<>();
@@ -67,12 +70,41 @@ public class BuyPromotionInsertHF implements BuyPromotionInsertService {
 		return response;
 	}
 	
+	@Override
 	public Object insert(BuyPromotionDTO detail, Integer menuId) throws NullPointerException, SQLException { 
 		
 		try { 
+			
 			PromotionDTO promotion = promotionORM.find(detail.getPromotionId());
 			
+			String[] fields = {"promotion_id","quantity","menu_detail_id"};
 			
+			Object[][] conditions = {
+					{"promotion_id","=",promotion.getId(),null}
+			};
+			
+			ArrayList<PromotionDetailDTO> details = 
+					promotionDetailORM.findMany(conditions,fields);
+			if (details!=null) {
+				details.forEach(detailProm -> {
+					String productName = "NaN";
+					try {
+						productName = menuDetailORM.find(detailProm.getMenuDetailId()).getProductName();
+					} catch ( NotFoundException | NullPointerException | SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					detailProm.setName(productName);
+				});
+			}
+			
+			BuyPromotionDTO promotionDetail = 
+					new BuyPromotionDTO(promotion.getId(), 
+										promotion.getName(),
+										detail.getQuantity(), 
+										promotion.getTotalPrice(), details);
+			
+			return promotionDetail;
 			
 		}catch (NotFoundException ex) {
 			

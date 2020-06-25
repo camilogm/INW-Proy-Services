@@ -1,6 +1,7 @@
 package com.inw.proy.responses.inserts;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.validation.Valid;
 
@@ -14,10 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inw.proy.DTO.TwoObjectsDTO;
 import com.inw.proy.DTO.buy.BuyDTO;
+import com.inw.proy.DTO.buy.BuyProductDTO;
+import com.inw.proy.DTO.buy.BuyPromotionDTO;
 import com.inw.proy.DTO.buy.MakeBuyDTO;
 import com.inw.proy.DTO.responses.ResponseCustom;
 import com.inw.proy.services.inserts.BuyInsertService;
 import com.inw.proy.services.inserts.BuyProductInsertService;
+import com.inw.proy.services.inserts.BuyPromotionInsertService;
 import com.inw.proy.services.updates.FinishBuyService;
 
 @RestController
@@ -31,11 +35,17 @@ public class BuyInsertController {
 	@Qualifier("buyProductInsertHF")
 	private BuyProductInsertService buyProductInsertService;
 	
+	
+	@Autowired
+	@Qualifier("buyPromotionInsertHF")
+	private BuyPromotionInsertService buyPromotionInsertService;
+	
 	@Autowired
 	@Qualifier("finishBuyHF")
 	private FinishBuyService finishBuyService;
 	
 	
+	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/buy/make",headers = "Accept=application/json")
 	private ResponseEntity<?> execute(@Valid @RequestBody MakeBuyDTO buy) throws SQLException{
 		
@@ -43,17 +53,24 @@ public class BuyInsertController {
 		TwoObjectsDTO productDetails = buyProductInsertService
 									.insertMany(buy.getProducts(), buy.getMenuId());
 	
+		TwoObjectsDTO promotionDetails = buyPromotionInsertService
+											.insertMany(buy.getPromotions(), buy.getMenuId());
+								
+		MakeBuyDTO dataFinal = (MakeBuyDTO) finishBuyService.execute
+						(data.getId(),
+						(ArrayList<BuyProductDTO>) productDetails.getObjectOne(), 
+						(ArrayList<BuyPromotionDTO>) promotionDetails.getObjectOne());
 		
-		finishBuyService.execute(data.getId(),productDetails.getObjectOne(), null);
 		
 		if (productDetails.getObjectTwo()!=null)
 			return new ResponseEntity<>(
-					ResponseCustom.partial_content(data, productDetails.getObjectTwo()),
+					ResponseCustom.partial_content(dataFinal, productDetails.getObjectTwo()),
 					HttpStatus.PARTIAL_CONTENT
 					);
 		
+		
 		return new ResponseEntity<>(
-				ResponseCustom.ok(data),HttpStatus.OK
+				ResponseCustom.ok(dataFinal),HttpStatus.OK
 				);
 	}
 }
