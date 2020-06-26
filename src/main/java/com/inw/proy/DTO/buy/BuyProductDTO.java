@@ -1,5 +1,7 @@
 package com.inw.proy.DTO.buy;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -10,8 +12,16 @@ import com.google.gson.annotations.SerializedName;
 import sv.hawklibrary.com.ORM.Annotations.DataModelAnnotations;
 
 @DataModelAnnotations(tableName = "J0120_product_buy")
-public class BuyProductDTO {
+public class BuyProductDTO implements Serializable {
+	
+	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	@Expose
 	@SerializedName("menu_detail_id")
 	@NotNull

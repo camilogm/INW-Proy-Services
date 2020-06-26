@@ -36,12 +36,16 @@ public class FinishBuyHF implements FinishBuyService {
 		buy.setId(buyId);
 		Double totalPrice = 0.0;
 			
-		for (BuyProductDTO product : productsDetails) { 	
-			totalPrice += product.getMementoPrice() * product.getQuantity();
-		}
-		for (BuyPromotionDTO promotion : promotionsDetails) {
-			totalPrice += promotion.getMementoPrice() * promotion.getQuantity();
-		}
+		if (productsDetails!=null)
+			for (BuyProductDTO product : productsDetails) { 	
+				totalPrice += product.getMementoPrice() * product.getQuantity();
+			}
+		
+		if (promotionsDetails!=null)
+			for (BuyPromotionDTO promotion : promotionsDetails) {
+				totalPrice += promotion.getMementoPrice() * promotion.getQuantity();
+			}
+		
 		
 		String productBuyStringfy = getStringfy.execute(productsDetails, BuyProductDTO.class);	
 		String promotionBuyStringfy = getStringfy.execute(promotionsDetails, BuyPromotionDTO.class);
@@ -52,8 +56,15 @@ public class FinishBuyHF implements FinishBuyService {
 		buyORM.setObject(buy);
 		 
 		if (buyORM.updateAndSave()) {
-			buy.setProducts((BuyProductDTO[]) productsDetails.toArray());
-			buy.setPromotions( (BuyPromotionDTO[]) promotionsDetails.toArray());
+			BuyProductDTO[] products = productsDetails==null ? null :  productsDetails
+					.toArray(new BuyProductDTO[productsDetails.size()]);
+			
+			
+			BuyPromotionDTO[] promotions = promotionsDetails==null ? null : promotionsDetails
+					.toArray(new BuyPromotionDTO[promotionsDetails.size()] );	
+					
+			buy.setProducts(products);
+			buy.setPromotions(promotions);
 			buy.setProductsBuy(null);
 			buy.setPromotionsBuy(null);
 			
