@@ -50,7 +50,7 @@ public class FinishBuyHF implements FinishBuyService {
 		buy.setPromotionsBuy(promotionBuyStringfy);
 		buy.setTotalPrice(totalPrice);
 		buyORM.setObject(buy);
-		
+		 
 		if (buyORM.updateAndSave()) {
 			buy.setProducts((BuyProductDTO[]) productsDetails.toArray());
 			buy.setPromotions( (BuyPromotionDTO[]) promotionsDetails.toArray());
