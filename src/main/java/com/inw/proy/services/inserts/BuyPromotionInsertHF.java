@@ -76,8 +76,12 @@ public class BuyPromotionInsertHF implements BuyPromotionInsertService {
 		try { 
 			
 			PromotionDTO promotion = promotionORM.find(detail.getPromotionId());
+			if (promotion.getMenuId()!=menuId)
+				return null;
 			
-			String[] fields = {"promotion_id","quantity","menu_detail_id"};
+			
+			
+			String[] fields = {"quantity","menu_detail_id"};
 			
 			Object[][] conditions = {
 					{"promotion_id","=",promotion.getId(),null}
@@ -85,7 +89,8 @@ public class BuyPromotionInsertHF implements BuyPromotionInsertService {
 			
 			ArrayList<PromotionDetailDTO> details = 
 					promotionDetailORM.findMany(conditions,fields);
-			if (details!=null) {
+			
+			if (details!=null ) {
 				details.forEach(detailProm -> {
 					String productName = "NaN";
 					try {

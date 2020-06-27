@@ -14,14 +14,17 @@ public class UserDTO implements Serializable {
 	private String name;
 	private String lastName;
 	private String rol;
+	private String phone;
 	
-	public UserDTO( Integer id,String email, String password, String name, String lastName, String rol) {
+	public UserDTO( Integer id,String email, String password, String name, String lastName, String rol,
+			String phone) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.lastName = lastName;
 		this.rol = rol;
+		this.phone = phone;
 	}
 
 	public Integer getId() {
@@ -70,6 +73,15 @@ public class UserDTO implements Serializable {
 
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+	
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public static long getSerialversionuid() {

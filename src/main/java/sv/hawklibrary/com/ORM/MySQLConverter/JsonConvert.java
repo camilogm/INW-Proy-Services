@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
+import com.google.gson.LongSerializationPolicy;
 
 import sv.hawklibrary.com.ORM.QueryOperations.IJsonConvert;
 import sv.hawklibrary.com.ORM.Validations.ValidationTypes;
@@ -25,7 +26,8 @@ public class JsonConvert  implements IJsonConvert {
 	
 	@Override
 	public JsonObject jsonConvert(Object object) throws JsonIOException {
-		 Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		 Gson gson = new GsonBuilder()
+				 .setLongSerializationPolicy(LongSerializationPolicy.STRING).excludeFieldsWithoutExposeAnnotation().create();
 	     String jsonString = gson.toJson(object);
 	     JsonObject jsonObject = new Gson().fromJson(jsonString, JsonObject.class);            
 	     return jsonObject;

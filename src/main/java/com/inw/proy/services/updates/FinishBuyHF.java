@@ -47,8 +47,10 @@ public class FinishBuyHF implements FinishBuyService {
 			}
 		
 		
-		String productBuyStringfy = getStringfy.execute(productsDetails, BuyProductDTO.class);	
-		String promotionBuyStringfy = getStringfy.execute(promotionsDetails, BuyPromotionDTO.class);
+		String productBuyStringfy = getStringfy.execute(productsDetails, BuyProductDTO.class)
+				.replace("\"", "|");	
+		String promotionBuyStringfy = getStringfy.execute(promotionsDetails, BuyPromotionDTO.class)
+				.replace("\"", "|");
 		
 		buy.setProductsBuy(productBuyStringfy);
 		buy.setPromotionsBuy(promotionBuyStringfy);
