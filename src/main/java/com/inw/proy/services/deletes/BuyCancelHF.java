@@ -31,7 +31,7 @@ public class BuyCancelHF implements BuyCancelService {
 		
 		BuyDTO buy = buyORM.find(buyId);
 		
-		if (checkBuyAccessService.executeBoolean(buy.getBuyerId())) {
+		if (checkBuyAccessService.executeBooleanDelete(buy.getBuyerId())) {
 			
 			buyORM.setObject(buy);
 			buyORM.deleteAndSave();

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.inw.proy.DTO.TwoObjectsDTO;
 import com.inw.proy.DTO.buy.MakeBuyDTO;
-import com.inw.proy.DTO.logged.UserDTO;
 import com.inw.proy.exceptions.NotAllowedException;
 import com.inw.proy.services.access.CheckBuyAccessService;
 
@@ -34,15 +33,12 @@ public class BuyFinderHF implements BuyFinderService {
 	@Override
 	public TwoObjectsDTO getBuyer(Integer buyId) throws NullPointerException, SQLException {
 		
-		String fields[] = { "id","buyer_id","total_price","date","delivery_service" };
+	
 		
-		MakeBuyDTO buy = 
-				buyORM.find(buyId,fields);
-		
-		UserDTO user = checkBuyAccess.execute(buy.getBuyerId());	
-		if (user!=null) {
+		TwoObjectsDTO response = checkBuyAccess.execute(buyId);	
+		if (response!=null) {
 			
-			return new TwoObjectsDTO(user,buy);
+			return response;
 		}
 		throw new  NotAllowedException();
 	}
@@ -55,7 +51,7 @@ public class BuyFinderHF implements BuyFinderService {
 		MakeBuyDTO buy = 
 				buyORM.find(buyId,fields);
 		
-		if (checkBuyAccess.executeBoolean(buy.getBuyerId())) { 
+		if (checkBuyAccess.executeBoolean(buyId)) { 
 			
 			String jsonArray = buy.getProductsBuy().replace("|", "\"");	
 			return jsonArray;

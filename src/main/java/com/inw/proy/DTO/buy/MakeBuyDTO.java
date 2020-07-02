@@ -9,8 +9,7 @@ import sv.hawklibrary.com.ORM.Annotations.DataModelAnnotations;
 @DataModelAnnotations(tableName = "J0120_buy")
 public class MakeBuyDTO extends BuyDTO {
 	
-	@NotNull
-	private Integer menuId;
+	
 	@NotNull
 	private Integer methodPay;	
 	@NotNull
@@ -33,25 +32,15 @@ public class MakeBuyDTO extends BuyDTO {
 			@NotNull Integer methodPay,
 			@NotNull @NotEmpty @Valid BuyProductDTO[] products, 
 			@Valid BuyPromotionDTO[] promotions) {
-		super(id, buyerId, totalPrice,productsBuy
+		super(id, buyerId,menuId, totalPrice,productsBuy
 				,promotionsBuy, date, localization, deliveryService, rate);
 		
-		this.menuId = menuId;
 		this.methodPay = methodPay;
 		this.products = products;
 		this.promotions = promotions;
 	
 	}
 	
-	
-	public Integer getMenuId() {
-		return menuId;
-	}
-
-	public void setMenuId(Integer menuId) {
-		this.menuId = menuId;
-	}
-
 	public Integer getMethodPay() {
 		return methodPay;
 	}

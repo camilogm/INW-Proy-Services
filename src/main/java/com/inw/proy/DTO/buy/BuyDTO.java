@@ -16,6 +16,10 @@ public class BuyDTO {
 	@SerializedName("buyer_id")
 	private Integer buyerId;
 	@Expose
+	@SerializedName("menu_id")
+	@NotNull
+	private Integer menuId;
+	@Expose
 	@SerializedName("total_price")
 	private Double totalPrice;
 	@Expose
@@ -41,7 +45,9 @@ public class BuyDTO {
 	}
 	
 	
-	public BuyDTO(Integer id, Integer buyerId, Double totalPrice,
+	public BuyDTO(Integer id, Integer buyerId,
+			@NotNull Integer menuId, 
+			Double totalPrice,
 			String productsBuy,
 			String promotionsBuy, String date, @NotNull String localization,
 			@NotNull Integer deliveryService, Integer rate
@@ -49,6 +55,7 @@ public class BuyDTO {
 		super();
 		this.id = id;
 		this.buyerId = buyerId;
+		this.menuId = menuId;
 		this.totalPrice = totalPrice;
 		this.productsBuy = productsBuy;
 		this.promotionsBuy = promotionsBuy;
@@ -71,9 +78,22 @@ public class BuyDTO {
 		return buyerId;
 	}
 
+	
 	public void setBuyerId(Integer buyerId) {
 		this.buyerId = buyerId;
 	}
+	
+	
+
+	public Integer getMenuId() {
+		return menuId;
+	}
+
+
+	public void setMenuId(Integer menuId) {
+		this.menuId = menuId;
+	}
+
 
 	public Double getTotalPrice() {
 		return totalPrice;
