@@ -8,12 +8,22 @@ import com.inw.proy.configurations.PathEnviroment;
 @Component
 public class CheckPublicEndPoints {
 
-	@Autowired
-	private PathEnviroment env;
+	private static final String[] publicPaths = {
+			"/shop/findmany",
+			"/user/find"
+	};
+	
 	
 	
 	public Boolean execute(String path) {	
-		return  Boolean.parseBoolean(env.getProperty(path));
+	
+		for ( String pathPublic : publicPaths ) {
+			
+			if (path.contains(pathPublic))
+				return true;
+			
+		}
+		return false;
 	}
 	
 }

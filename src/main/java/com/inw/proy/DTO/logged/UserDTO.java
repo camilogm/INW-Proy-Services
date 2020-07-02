@@ -3,6 +3,7 @@ package com.inw.proy.DTO.logged;
 import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import sv.hawklibrary.com.ORM.Annotations.DataModelAnnotations;
 
@@ -19,8 +20,10 @@ public class UserDTO implements Serializable {
 	private String email;
 	private String password;
 	@Expose
+	@SerializedName("first_name")
 	private String name;
 	@Expose
+	@SerializedName("last_name")
 	private String lastName;
 	private String rol;
 	@Expose

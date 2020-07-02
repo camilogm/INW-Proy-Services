@@ -11,6 +11,7 @@ import com.inw.proy.DTO.TwoObjectsDTO;
 import com.inw.proy.DTO.buy.MakeBuyDTO;
 import com.inw.proy.DTO.logged.UserDTO;
 import com.inw.proy.DTO.menu.MenuDTO;
+import com.inw.proy.services.finders.UserFinderService;
 import com.inw.proy.utils.UserDetailsLogged;
 
 import sv.hawklibrary.com.ORM.ORMApplicationTables;
@@ -22,17 +23,21 @@ public class CheckBuyAccessHF implements CheckBuyAccessService {
 	
 	@Autowired
 	private UserDetailsLogged userDetails;
+	
+	@Autowired
+	@Qualifier("userFinderHF")
+	private UserFinderService userFinderService;
+	
+	
 	private ORMApplicationTables<MakeBuyDTO> buyORM;
 	private ORMApplicationTables<ShopDTO> shopORM;
 	private ORMApplicationTables<MenuDTO> menuORM;
-	private ORMApplicationTables<UserDTO> userORM;
 	
 	public CheckBuyAccessHF() {
 		
 		this.buyORM = new ORMApplicationTables<>(MakeBuyDTO.class);
 		this.shopORM = new ORMApplicationTables<>(ShopDTO.class);
 		this.menuORM = new ORMApplicationTables<>(MenuDTO.class);
-		this.userORM = new ORMApplicationTables<>(UserDTO.class);
 	}
 	
 	
@@ -40,8 +45,6 @@ public class CheckBuyAccessHF implements CheckBuyAccessService {
 	public TwoObjectsDTO execute(Integer buyId) throws NullPointerException, SQLException { 
 		
 		MakeBuyDTO buy = this.getBuy(buyId);
-		
-		System.out.println(userDetails.getUser().getId());
 		
 		if (userDetails.getUser().getId() == buy.getBuyerId() ) {
 			
@@ -53,7 +56,7 @@ public class CheckBuyAccessHF implements CheckBuyAccessService {
 			
 			if (userDetails.getUser().getId() == sellerId) { 
 				
-				UserDTO client = userORM.find(buy.getBuyerId());
+				UserDTO client =  userFinderService.execute(buy.getBuyerId());
 				return new TwoObjectsDTO(client,buy);
 			}			
 		}
