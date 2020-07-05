@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +22,7 @@ public class ShopFinderController {
 	@Qualifier("shopFinderManyHF")
 	private ShopFinderManyService shopFinderManyService;
 	
-	@GetMapping(value = "/shop/findmany", headers = "Accept=application/json")
+	@PostMapping(value = "/shop/findmany", headers = "Accept=application/json")
 	public ResponseEntity<?> execute(@Valid @RequestBody
 			ConditionsStructure conditions){
 		
