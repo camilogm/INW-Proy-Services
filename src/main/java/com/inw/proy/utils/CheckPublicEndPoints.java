@@ -8,6 +8,7 @@ public class CheckPublicEndPoints {
 
 	private static final String[] publicPaths = {
 			"/shop/findmany",
+			"/shop/find",
 			"/user/find"
 	};
 	
