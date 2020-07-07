@@ -23,6 +23,7 @@ public class ShopDTO {
 	@Size(min=10,max = 50)
 	@NotDuplicated
 	private String name;
+	@Expose
 	private String imagePath;
 	@SerializedName("global_rate")
 	@Expose
