@@ -26,18 +26,22 @@ public class MenuDetailDTO {
 	@Expose
 	@SerializedName("product_category")
 	private String productCategory;
+	@Expose
+	@SerializedName("image_url")
+	private String imageURL;
 	
 	public MenuDetailDTO() {
 		
 	}
 	
 	public MenuDetailDTO(Integer id, Integer menuId, @NotNull String productName, @NotNull Double unitaryPrice,
-			String productCategory) {
+			String productCategory,String imageURL) {
 		this.id = id;
 		this.menuId = menuId;
 		this.productName = productName;
 		this.unitaryPrice = unitaryPrice;
 		this.productCategory = productCategory;
+		this.imageURL = imageURL;
 	}
 
 	public Integer getId() {
@@ -79,9 +83,13 @@ public class MenuDetailDTO {
 	public void setProductCategory(String productCategory) {
 		this.productCategory = productCategory;
 	}
-	
-	
-	
-	
+
+	public String getImageURL() {
+		return imageURL;
+	}
+
+	public void setImageURL(String imageURL) {
+		this.imageURL = imageURL;
+	}
 	
 }
